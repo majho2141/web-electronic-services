@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&display=swap');
+
+.clients-list{
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+
+
+    .card-client{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        border-radius: 10px;
+        margin-top: 10px;
+        margin-left: 10px;
+        width: 300px;
+        border-style: solid;
+        padding-bottom: 20px;
+        box-shadow: 0px 0px 5px 0px #000000;
+
+        .card-title-client{
+            font-size: 15px;
+            font-family: 'IBM Plex Mono', 'Monospace';
+            text-transform: uppercase;
+        }
+
+
+        .card-image-client{
+            margin: 5px;
+            width: 100px;
+            object-fit: cover;
+
+            &:hover{
+                cursor: pointer;
+                transform: scale(1.05);
+            }
+        }
+
+    }
+}
+.client-information {
+    margin:20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    p{
+        font-size: 14px;
+        font-family: "IBM Plex Mono";
+        margin: 5px;
+    }
+}
