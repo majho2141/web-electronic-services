@@ -1,0 +1,39 @@
+###
+POST http://localhost:3100/api/v1/categorias/new-ctg HTTP/1.1
+Content-Type: application/json
+
+{
+    "nombre": "prueba2",
+    "descripcion": "prueba.0"
+}
+
+###
+GET http://localhost:3100/api/v1/categorias HTTP/1.1
+
+###
+GET http://localhost:3100/api/v1/categorias/6547071a300f94f7e0ddc86a HTTP/1.1
+
+###
+DELETE  http://localhost:3100/api/v1/categorias/654708493136c6132ac65866 HTTP/1.1
+
+///////////////////////////////////////////////////////////////////////////////////
+###
+POST http://localhost:3100/api/v1/productos/new-pro HTTP/1.1
+Content-Type: application/json
+
+{
+    "nombre": "Ejemplo",
+    "precio": 20300,
+    "descuento": 5,
+    "cantidad": 50,
+    "disponibilidad": true,
+    "categoriaId": "6547084a3136c6132ac65868"
+}
+
+
+###
+GET http://localhost:3100/api/v1/productos/654709057475d38f59e2f7d7/productos HTTP/1.1
+
+###
+GET http://localhost:3100/api/v1/productos/6546d42ca4261fded22159e0 HTTP/1.1
+

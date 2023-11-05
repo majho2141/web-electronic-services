@@ -9,14 +9,19 @@ const ProductoSchema = moongose.Schema({
         require: true,
     },
     descuento: {
-        type: moongose.Schema.Types.Decimal128,
+        type: Number,
         validate: {
             validator: function(value) {
-                return value % 5 === 0;
+                // Verifica si el descuento es un múltiplo de 5% (0.05 en valor decimal)
+                return (value * 100) % 5 === 0;
             },
             message: "El descuento debe ser un múltiplo de 5%.",
         },
-    },
+        // Multiplicar el valor de descuento por 100 para mostrarlo como porcentaje en la interfaz de usuario
+        get: (value) => (value * 100).toFixed(2),
+        // Dividir el valor de descuento entre 100 antes de guardarlo en la base de datos
+        set: (value) => (value / 100),
+    },    
     cantidad:{
         type: Number,
         require: true,

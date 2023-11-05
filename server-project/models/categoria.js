@@ -1,9 +1,10 @@
 const moongose = require("mongoose")
 const CategoriaSchema = moongose.Schema({
-    nombre : {
+    nombre: {
         type: String,
-        require: true,
-    },
+        required: true,
+        unique: true, 
+    },    
     descripcion : {
         type: String,
         require: true,
