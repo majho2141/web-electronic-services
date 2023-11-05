@@ -1,5 +1,5 @@
 const jwt = require("../utils/jwt");
-const userModel = require("../models/user");
+const userModel = require("../models/usuarios");
 
 const ensureAuth = async (req, res, next) => {
   try {

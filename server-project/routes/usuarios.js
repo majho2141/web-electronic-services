@@ -1,4 +1,4 @@
-const userController = require("../controllers/user");
+const userController = require("../controllers/usuarios");
 const express = require("express");
 const md_auth= require('../middlewares/authenticatedValidation');
 

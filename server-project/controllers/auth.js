@@ -1,28 +1,29 @@
-const userModel = require('../models/user');
+const userModel = require('../models/usuarios');
 const { generateToken , refreshToken } = require('../utils/jwt');
 const bcrypt = require("bcrypt");
 
 //Crear la funcion para el registro - signIn
 const signin = async (req,res) => {
-    const {firstname, lastname, email, current_password} = req.body;
+    const {nombre, apellido, email, telefono , contraseña} = req.body;
     try{
         if (!email){
             res.status(400).json({message: "El email es obligatorio"});
             throw new Error("El email es obligatorio");
         }
-        if (!current_password){
+        if (!contraseña){
             res.status(400).json({message: "La contraseña es obligatoria"});
             throw new Error("La contraseña es obligatoria");
         }
         const emailLowerCase = email.toLowerCase();
         const salt = await bcrypt.genSalt(10);
-        const current_password_hash = await bcrypt.hash(current_password, salt);
+        const contraseña_hash = await bcrypt.hash(contraseña, salt);
         
         const newUser = await userModel.create({
-            firstname,
-            lastname,
+            nombre,
+            apellido,
             email: emailLowerCase,
-            current_password: current_password_hash,
+            telefono,
+            contraseña: contraseña_hash,
         });
 
         const userStorage = await newUser.save();

@@ -11,13 +11,14 @@ const UsuarioSchema = moongose.Schema({
     },
     email: {
         type: String,
+        unique: true,
         required: true,
     },
     telefono: {
         type: String,
         required: true,
     },
-    password: {
+    contraseña: {
         type: String,
         required: true,
     },
