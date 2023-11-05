@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {Clients} from './components/clients/Clients';
+import { Main } from './components/main/Main';
 import {Button} from '@mui/material';
 
 const App = () => {
@@ -11,7 +12,7 @@ const App = () => {
   }
   return (
     <div>
-      <Clients />
+      <Main />
     </div>
 
   )
