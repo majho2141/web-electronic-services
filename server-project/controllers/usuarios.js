@@ -1,5 +1,5 @@
 const { response } = require('express');
-const userModel = require('../models/user');
+const userModel = require('../models/usuarios');
 
 // Asincronía
 // async await
