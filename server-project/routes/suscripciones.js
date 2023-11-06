@@ -1,17 +1,17 @@
-const moongose = require("mongoose");
-const SuscripcionesSchema = moongose.Schema({
-    nombre:{
-        type: String,
-        require: true,
-    },
-    correo:{
-        type: String,
-        require: true,
-    },
-    celular:{
-        type: String,
-        require: true,
-    }
-});
-const Suscripciones = moongose.model("Suscripciones",SuscripcionesSchema);
-module.exports=Suscripciones;
+const suscripcionController = require ('../controllers/suscripciones');
+const express = require("express");
+
+const router = express.Router();
+
+router
+    //http://localhost:3100/api/v1/suscripciones/new-suscripcion
+    .post('/new-suscription',suscripcionController.createSuscripcion)
+    //http://localhost:3100/api/v1/suscripciones/
+    .get('/',suscripcionController.getAllSuscripciones)
+    //http://localhost:3100/api/v1/suscripciones/:id
+    .get('/:id',suscripcionController.getSuscripcionById)
+    //http://localhost:3100/api/v1/suscripciones/:id  
+    .delete('/:id',suscripcionController.deleteSuscripcion);
+
+
+module.exports = router;

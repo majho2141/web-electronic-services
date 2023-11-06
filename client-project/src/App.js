@@ -1,19 +1,22 @@
 import React, { useState } from 'react';
-import {Clients} from './components/clients/Clients';
-import {Button} from '@mui/material';
+import {Routes, Route} from 'react-router-dom';
+// import {Clients} from './components/clients/Clients';
+import { Suscription } from './components/suscriptions/Suscriptions';
+import { Main } from './components/main/Main';
+import { Login } from './components/login/Login';
+import { Signin } from './components/signin/Signin';
+
 
 const App = () => {
-  //JS
-  const [saludo,setSaludo]= useState("Hello World");
-  
-  const handleSaludo =() => {
-    setSaludo ('Majho');
-  }
   return (
     <div>
-      <Clients />
+      <Routes>
+        <Route path="/" element={<Main/>}/>
+        <Route path="/Suscribirse" element={<Suscription/>}/>
+        <Route path="/Iniciar sesión" element={<Login/>}/>
+        <Route path="/Registrarse" element={<Signin/>}/>
+      </Routes>
     </div>
-
   )
 }
 
