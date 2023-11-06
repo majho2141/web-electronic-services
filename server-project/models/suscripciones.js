@@ -6,10 +6,12 @@ const SuscripcionesSchema = moongose.Schema({
     },
     correo:{
         type: String,
+        unique: true,
         require: true,
     },
     celular:{
         type: String,
+        unique: true,
         require: true,
     }
 });

@@ -21,6 +21,7 @@ const ProductoSchema = moongose.Schema({
         get: (value) => (value * 100).toFixed(2),
         // Dividir el valor de descuento entre 100 antes de guardarlo en la base de datos
         set: (value) => (value / 100),
+        default: 0,
     },    
     cantidad:{
         type: Number,

@@ -4,6 +4,8 @@ import avatar3 from './images/clients/avatar3.png';
 import phone from './images/products/celular.png';
 import pc from './images/products/pc.jpg';
 import tablet from './images/products/tablet.png';
+import logo from './images/pages/logo.jpeg'
+import logo2 from './images/pages/logo2.jpeg'
 
 
 const image ={
@@ -12,6 +14,8 @@ const image ={
     avatar3,
     phone,
     tablet,
+    logo,
+    logo2,
     pc
 };
 
