@@ -9,6 +9,11 @@ router.post('/new-pro',productoController.createProducto);
 router.get('/:categoriaId/productos',productoController.getProductosByCategoria);
 //http://localhost:3100/api/v1/productos/
 router.get('/:id',productoController.getProductoById);
-
+//http://localhost:3100/api/v1/productos/
+router.get('/',productoController.getAllProductos);
+//http://localhost:3100/api/v1/productos/
+router.patch('/:id',productoController.updateProductoById);
+//http://localhost:3100/api/v1/productos/
+router.delete('/:id',productoController.deleteProductoById);
 
 module.exports = router;

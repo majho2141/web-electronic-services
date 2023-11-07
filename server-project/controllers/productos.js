@@ -38,9 +38,45 @@ const getProductoById = async (req,res) =>{
     }
 }
 
+const getAllProductos = async (req,res) =>{
+    try {   
+        const allProductos = await productoModel.find();
+        res.status(200).json(allProductos)
+    } catch (err) {
+        res.status(400).json({message: err.message})
+    }
+}
+
+const updateProductoById = async(req,res) => {
+    try {
+        const {id} = req.params;
+        const productoDataEdit =  req.body;
+        const response = await productoModel.findByIdAndUpdate(id, productoDataEdit);
+        res.status(200).json({messasge:'Actualizacion exitosa'});
+    } catch (error) {
+        res.status(400).json({message: error.message});
+
+    }
+}
+
+const deleteProductoById = async(req,res) => {
+    try {
+        const {id} = req.params;
+        const response = await productoModel.findByIdAndDelete(id);
+        res.status(200).json({message: 'Producto eliminado exitosamente'});
+    } catch (error) {
+        res.status(400).json({message: error});
+    }
+
+
+}
+
 
 module.exports = {
     createProducto,
     getProductosByCategoria,
-    getProductoById
+    getProductoById,
+    getAllProductos,
+    updateProductoById,
+    deleteProductoById
 }

@@ -30,6 +30,10 @@ const UsuarioSchema = moongose.Schema({
         type: Boolean,
         default: false,
     },
+    permisos: {   
+        type: Boolean,
+        default: false,
+    },
     fecha_creacion: {
         type: Date,
         default: Date.now(),
