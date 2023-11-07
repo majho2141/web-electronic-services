@@ -44,8 +44,8 @@ export const Main = () => {
     const [productos, setProductos] = useState(null);
     const [dataProductos, setDataProductos] = useState([]);
 
-    const urlCategorias = "http://localhost:3000/api/v1/categorias";
-    const urlProductos = "http://localhost:3000/api/v1/productos";
+    const urlCategorias = "http://localhost:3100/api/v1/categorias";
+    const urlProductos = "http://localhost:3100/api/v1/productos";
 
     useEffect(() => {
         fetch(urlProductos, {

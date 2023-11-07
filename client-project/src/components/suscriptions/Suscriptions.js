@@ -24,7 +24,7 @@ export const Suscription = () => {
 
     const [open, setOpen] = useState(false);
 
-    const url = "http://localhost:3000/api/v1/suscripciones/new-suscription";
+    const url = "http://localhost:3100/api/v1/suscripciones/new-suscription";
 
     const [newSuscription, setNewSuscription] = useState({
         nombre: '',

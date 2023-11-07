@@ -39,13 +39,13 @@ const signin = async (req, res) => {
                 pass: 'qlti jxim xibh mzlz'
             }
         });
-
+        newUser.estado = true;
         await transporter.sendMail({
             from: 'camiangi1517@gmail.com',
             to: `${email}`,
             subject: 'Bienvenido a Electronics X!',
             html: `<h1>Gracias por registrarte ${nombre} ${apellido}</h1>
-                    <p>Ya puedes acceder a todo nuestro contenido, <a href='http://localhost:3001'>haz click aquí.</p>
+                    <p>Ya puedes acceder a todo nuestro contenido, <a href='http://localhost:3000'>haz click aquí.</p>
             `
         });
 
@@ -56,7 +56,7 @@ const signin = async (req, res) => {
                 to: `${email}`,
                 subject: 'Bienvenido a Electronics X!',
                 html: `<h1>Gracias por registrarte ${nombre} ${apellido}</h1>
-                        <p>Haz <a href='http://localhost:3000/api/v1/auth/activate/${newUser.id}'>click aquí</a> para activar tu cuenta! </p>
+                        <p>Haz <a href='http://localhost:3100/api/v1/auth/activate/${newUser.id}'>click aquí</a> para activar tu cuenta! </p>
                 `
             });
         }
@@ -120,7 +120,7 @@ const activate = async (req, res) => {
         const userFind = await userModel.findById(id);
         userFind.estado = true;
         await userFind.save();
-        res.redirect(301, 'http://localhost:3001/Activaci%C3%B3n%20exitosa');
+        res.redirect(301, 'http://localhost:3000/Activaci%C3%B3n%20exitosa');
     } catch (err) {
         res.status(400).json({ message: err.message });
     }

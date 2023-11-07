@@ -33,13 +33,13 @@ export const Productos = () => {
     
     const handleDeleteClick = (id) => {
         if (window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-            fetch(`http://localhost:3000/api/v1/productos/${id}`, {
+            fetch(`http://localhost:3100/api/v1/productos/${id}`, {
                 method: 'DELETE',
             })
                 .then((response) => {
                     if (response.ok) {
                         console.log(`Producto ${id} eliminado con éxito`);
-                        fetch('http://localhost:3000/api/v1/productos')
+                        fetch('http://localhost:3100/api/v1/productos')
                             .then((response) => response.json())
                             .then((data) => {
                                 setProductos(data);
@@ -73,7 +73,7 @@ export const Productos = () => {
     });
 
     useEffect(() => {
-        fetch('http://localhost:3000/api/v1/categorias')
+        fetch('http://localhost:3100/api/v1/categorias')
 
             .then((response) => response.json())
             .then((data) => {
@@ -85,7 +85,7 @@ export const Productos = () => {
     }, []);
 
     useEffect(() => {
-        fetch('http://localhost:3000/api/v1/productos')
+        fetch('http://localhost:3100/api/v1/productos')
 
             .then((response) => response.json())
             .then((data) => {
@@ -123,7 +123,7 @@ export const Productos = () => {
     const handleAccept = async () => {
         if (editMode) {
             try {
-                const response = await fetch(`http://localhost:3000/api/v1/productos/${selectedProductId}`, {
+                const response = await fetch(`http://localhost:3100/api/v1/productos/${selectedProductId}`, {
                     method: 'PATCH', 
                     headers: {
                         'Content-Type': 'application/json',
@@ -132,7 +132,7 @@ export const Productos = () => {
                     
                 });
                 if (response.ok) {
-                    fetch('http://localhost:3000/api/v1/productos')
+                    fetch('http://localhost:3100/api/v1/productos')
                     .then((response) => response.json())
                     .then((data) => {
                         setProductos(data);
@@ -149,7 +149,7 @@ export const Productos = () => {
             }
         } else {
             try {
-                const response = await fetch('http://localhost:3000/api/v1/productos/new-pro', {
+                const response = await fetch('http://localhost:3100/api/v1/productos/new-pro', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -160,7 +160,7 @@ export const Productos = () => {
                 if (response.ok) {
                     console.log('Producto creado con éxito');
                     handleCloseModal();
-                    fetch('http://localhost:3000/api/v1/productos')
+                    fetch('http://localhost:3100/api/v1/productos')
                         .then((response) => response.json())
                         .then((data) => {
                             setProductos(data);
@@ -205,7 +205,7 @@ export const Productos = () => {
 
     const handleAcceptCategoria = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/v1/categorias/new-ctg', {
+            const response = await fetch('http://localhost:3100/api/v1/categorias/new-ctg', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -217,7 +217,7 @@ export const Productos = () => {
                 console.log('Categoría creada con éxito');
                 handleCloseModalCategoria();
                 
-                fetch('http://localhost:3000/api/v1/categorias')
+                fetch('http://localhost:3100/api/v1/categorias')
                     .then((response) => response.json())
                     .then((data) => {
                         setCategorias(data);

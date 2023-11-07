@@ -29,14 +29,14 @@ export const Login = () => {
 
     const [open, setOpen] = useState(false);
 
-    const urlGetUser = "http://localhost:3000/api/v1/usuarios/email/";
+    const urlGetUser = "http://localhost:3100/api/v1/usuarios/email/";
 
     const [email, setEmail] = useState('');
 
     const handleRoutes = async (email) => {
         let user;
         console.log(email);
-        await fetch(`http://localhost:3000/api/v1/usuarios/email/${email}`, {
+        await fetch(`http://localhost:3100/api/v1/usuarios/email/${email}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -59,7 +59,7 @@ export const Login = () => {
         }
     }
 
-    const url = "http://localhost:3000/api/v1/auth/login";
+    const url = "http://localhost:3100/api/v1/auth/login";
 
     const [newLogin, setNewLogin] = useState({
         email: '',

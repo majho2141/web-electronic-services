@@ -41,7 +41,7 @@ export const Usuarios = () => {
 
     const [usuarios,setUsuarios]= useState([]);
     useEffect (()=>{
-        fetch('http://localhost:3000/api/v1/usuarios')
+        fetch('http://localhost:3100/api/v1/usuarios')
             .then((response) => response.json())
             .then((data) =>{
                 setUsuarios(data);
@@ -61,7 +61,7 @@ export const Usuarios = () => {
 
     const handleAccept = async ()=>{
         try {
-            const response = await fetch(`http://localhost:3000/api/v1/usuarios/${selectedUsuarioId}`, {
+            const response = await fetch(`http://localhost:3100/api/v1/usuarios/${selectedUsuarioId}`, {
                 method: 'PATCH', 
                 headers: {
                     'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ export const Usuarios = () => {
                 
             });
             if (response.ok) {
-                fetch('http://localhost:3000/api/v1/usuarios')
+                fetch('http://localhost:3100/api/v1/usuarios')
                 .then((response) => response.json())
                 .then((data) => {
                     setUsuarios(data);
@@ -113,7 +113,7 @@ export const Usuarios = () => {
 
         if (window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
             try {
-                const response = await fetch(`http://localhost:3000/api/v1/usuarios/${selectedU._id}`, {
+                const response = await fetch(`http://localhost:3100/api/v1/usuarios/${selectedU._id}`, {
                     method: 'PATCH', 
                     headers: {
                         'Content-Type': 'application/json',
@@ -125,7 +125,7 @@ export const Usuarios = () => {
                 
                 });
                 if (response.ok) {
-                    fetch('http://localhost:3000/api/v1/usuarios')
+                    fetch('http://localhost:3100/api/v1/usuarios')
                     .then((response) => response.json())
                     .then((data) => {
                         setUsuarios(data);

@@ -1,5 +1,5 @@
 ###
-POST http://localhost:3000/api/v1/categorias/new-ctg HTTP/1.1
+POST http://localhost:3100/api/v1/categorias/new-ctg HTTP/1.1
 Content-Type: application/json
 
 {
@@ -8,17 +8,17 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/api/v1/categorias HTTP/1.1
+GET http://localhost:3100/api/v1/categorias HTTP/1.1
 
 ###
-GET http://localhost:3000/api/v1/categorias/6547071a300f94f7e0ddc86a HTTP/1.1
+GET http://localhost:3100/api/v1/categorias/6547071a300f94f7e0ddc86a HTTP/1.1
 
 ###
-DELETE  http://localhost:3000/api/v1/categorias/654708493136c6132ac65866 HTTP/1.1
+DELETE  http://localhost:3100/api/v1/categorias/654708493136c6132ac65866 HTTP/1.1
 
 ///////////////////////////////////////////////////////////////////////////////////
 ###
-POST http://localhost:3000/api/v1/productos/new-pro HTTP/1.1
+POST http://localhost:3100/api/v1/productos/new-pro HTTP/1.1
 Content-Type: application/json
 
 {
@@ -32,16 +32,16 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:3000/api/v1/productos/654709057475d38f59e2f7d7/productos HTTP/1.1
+GET http://localhost:3100/api/v1/productos/654709057475d38f59e2f7d7/productos HTTP/1.1
 
 ###
-GET http://localhost:3000/api/v1/productos/6546d42ca4261fded22159e0 HTTP/1.1
+GET http://localhost:3100/api/v1/productos/6546d42ca4261fded22159e0 HTTP/1.1
 
 ###
-GET http://localhost:3000/api/v1/productos HTTP/1.1
+GET http://localhost:3100/api/v1/productos HTTP/1.1
 
 ###
-PATCH http://localhost:3000/api/v1/productos/6546d457a4261fded22159e3 HTTP/1.1
+PATCH http://localhost:3100/api/v1/productos/6546d457a4261fded22159e3 HTTP/1.1
 Content-Type: application/json
 
 {
@@ -54,10 +54,10 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3000/api/v1/productos/6546d42ca4261fded22159e0 HTTP/1.1
+DELETE http://localhost:3100/api/v1/productos/6546d42ca4261fded22159e0 HTTP/1.1
 
 ###
-POST http://localhost:3000/api/v1/auth/signin HTTP/1.1
+POST http://localhost:3100/api/v1/auth/signin HTTP/1.1
 Content-Type: application/json
 
 
@@ -72,17 +72,17 @@ Content-Type: application/json
 
 
 ###
-GET http://localhost:3000/api/v1/categorias HTTP/1.1
+GET http://localhost:3100/api/v1/categorias HTTP/1.1
 Content-Type: application/json
 
 ###
-DELETE http://localhost:3000/api/v1/categorias/65485e457607fd6fdda1d59b HTTP/1.1
+DELETE http://localhost:3100/api/v1/categorias/65485e457607fd6fdda1d59b HTTP/1.1
 Content-Type: application/json
 
 
 
 ###
-POST http://localhost:3000/api/v1/suscripciones/new-suscription HTTP/1.1
+POST http://localhost:3100/api/v1/suscripciones/new-suscription HTTP/1.1
 Content-Type: application/json
 
 {
@@ -92,20 +92,20 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/api/v1/suscripciones HTTP/1.1
+GET http://localhost:3100/api/v1/suscripciones HTTP/1.1
 Content-Type: application/json
 
 ###
-DELETE http://localhost:3000/api/v1/suscripciones/6549946944fa75ead33d215d HTTP/1.1
+DELETE http://localhost:3100/api/v1/suscripciones/6549946944fa75ead33d215d HTTP/1.1
 Content-Type: application/json
 
 ###
-GET http://localhost:3000/api/v1/usuarios HTTP/1.1
+GET http://localhost:3100/api/v1/usuarios HTTP/1.1
 
 ###
-DELETE http://localhost:3000/api/v1/usuarios/6549946944fa75ead33d215d HTTP/1.1
+DELETE http://localhost:3100/api/v1/usuarios/654a4cee6d150b85eeceb75f HTTP/1.1
 Content-Type: application/json
 
 ###
-GET http://localhost:3000/api/v1/usuarios/email/camiangi1517@gmail.com HTTP/1.1
+GET http://localhost:3100/api/v1/usuarios/email/camiangi1517@gmail.com HTTP/1.1
 Content-Type: application/json

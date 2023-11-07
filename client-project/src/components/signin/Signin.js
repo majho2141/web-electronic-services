@@ -24,7 +24,7 @@ export const Signin = () => {
 
     const [open, setOpen] = useState(false);
 
-    const url = "http://localhost:3000/api/v1/auth/signin"
+    const url = "http://localhost:3100/api/v1/auth/signin"
 
     const [newUser, setNewUser] = useState({
         nombre: '',
