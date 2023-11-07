@@ -1,23 +1,29 @@
 const userModel = require('../models/usuarios');
 const { generateToken , refreshToken } = require('../utils/jwt');
+const nodemailer = require("nodemailer");
 const bcrypt = require("bcrypt");
 
 //Crear la funcion para el registro - signIn
-const signin = async (req,res) => {
-    const {nombre, apellido, email, telefono , contraseña} = req.body;
-    try{
-        if (!email){
-            res.status(400).json({message: "El email es obligatorio"});
+const signin = async (req, res) => {
+    const { nombre, apellido, email, telefono, contraseña } = req.body;
+    try {
+        // Verificar si hay usuarios registrados en la base de datos
+        const userCount = await userModel.countDocuments();
+        console.log(userCount);
+
+        if (!email) {
+            res.status(400).json({ message: "El email es obligatorio" });
             throw new Error("El email es obligatorio");
         }
-        if (!contraseña){
-            res.status(400).json({message: "La contraseña es obligatoria"});
+        if (!contraseña) {
+            res.status(400).json({ message: "La contraseña es obligatoria" });
             throw new Error("La contraseña es obligatoria");
         }
+        
         const emailLowerCase = email.toLowerCase();
         const salt = await bcrypt.genSalt(10);
         const contraseña_hash = await bcrypt.hash(contraseña, salt);
-        
+
         const newUser = await userModel.create({
             nombre,
             apellido,
@@ -25,34 +31,59 @@ const signin = async (req,res) => {
             telefono,
             contraseña: contraseña_hash,
         });
+        const transporter = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 587,
+            auth: {
+                user: 'camiangi1517@gmail.com',
+                pass: 'qlti jxim xibh mzlz'
+            }
+        });
 
+        await transporter.sendMail({
+            from: 'camiangi1517@gmail.com',
+            to: `${email}`,
+            subject: 'Bienvenido a Electronics X!',
+            html: `<h1>Gracias por registrarte ${nombre} ${apellido}</h1>
+                    <p>Ya puedes acceder a todo nuestro contenido, <a href='http://localhost:3001'>haz click aquí.</p>
+            `
+        });
+
+        if (userCount === 0) {
+            newUser.rol= 'administrador';
+            await transporter.sendMail({
+                from: 'camiangi1517@gmail.com',
+                to: `${email}`,
+                subject: 'Bienvenido a Electronics X!',
+                html: `<h1>Gracias por registrarte ${nombre} ${apellido}</h1>
+                        <p>Haz <a href='http://localhost:3000/api/v1/auth/activate/${newUser.id}'>click aquí</a> para activar tu cuenta! </p>
+                `
+            });
+        }
         const userStorage = await newUser.save();
-
-        console.log(userStorage);
-
         res.status(201).json(newUser);
-    }catch(err){
-        res.status(400).json({message: err.message});
+    } catch (err) {
+        res.status(400).json({ message: err.message });
     }
 };
 
 const login = async (req, res) => {
-    const {email, current_password} = req.body;
+    const {email, contraseña} = req.body;
     console.log(req.body);
     try {
-        if (!email ||!current_password){
+        if (!email || !contraseña){
             throw new Error("El email y la contraseña son obligatorios");
         }
         const emailLowerCase =  email.toLowerCase();
-        const userStore = await userModel.findOne({ email: emailLowerCase}).exec(); //findOne sirve para buscar un solo usuario porque es valor unico
+        const userStore = await userModel.findOne({ email: emailLowerCase}).exec();
 
         if (!userStore) {
             throw new Error("El usuario no existe");
         }
 
         const check = await bcrypt.compare(
-            current_password,
-            userStore.current_password
+            contraseña,
+            userStore.contraseña
         );
 
         if (!check) {
@@ -83,8 +114,21 @@ const getMe = async (req, res) => {
     }
 }
 
+const activate = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const userFind = await userModel.findById(id);
+        userFind.estado = true;
+        await userFind.save();
+        res.redirect(301, 'http://localhost:3001/Activaci%C3%B3n%20exitosa');
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+}
+
 module.exports = {
     signin,
     login,
     getMe,
+    activate
 };

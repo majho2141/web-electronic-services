@@ -33,8 +33,8 @@ const style = {
 const settings = {
     'Registrarse': 'signup',
     'Iniciar sesión': 'login',
-  };
-  
+};
+
 
 
 export const Main = () => {
@@ -45,7 +45,7 @@ export const Main = () => {
     const [dataProductos, setDataProductos] = useState([]);
 
     const urlCategorias = "http://localhost:3000/api/v1/categorias";
-    const urlProductos = "http://localhost:3000/api/v1/productos/654709057475d38f59e2f7d7/productos";
+    const urlProductos = "http://localhost:3000/api/v1/productos";
 
     useEffect(() => {
         fetch(urlProductos, {

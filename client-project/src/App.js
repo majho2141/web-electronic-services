@@ -5,6 +5,8 @@ import { Suscription } from './components/suscriptions/Suscriptions';
 import { Main } from './components/main/Main';
 import { Login } from './components/login/Login';
 import { Signin } from './components/signin/Signin';
+import { Status } from './components/status/Status';
+
 
 
 const App = () => {
@@ -15,6 +17,7 @@ const App = () => {
         <Route path="/Suscribirse" element={<Suscription/>}/>
         <Route path="/Iniciar sesión" element={<Login/>}/>
         <Route path="/Registrarse" element={<Signin/>}/>
+        <Route path="/Activación exitosa" element={<Status/>}/>
       </Routes>
     </div>
   )

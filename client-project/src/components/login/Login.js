@@ -24,44 +24,40 @@ export const Login = () => {
 
     const [open, setOpen] = useState(false);
 
-    // const url = "http://localhost:3000/api/v1/suscripciones/new-suscription";
+    const url = "http://localhost:3000/api/v1/auth/login";
 
-    const url = "http://localhost:3100/api/v1/auth/login";
-
-    const [newSuscription, setNewSuscription] = useState({
-        nombre: '',
+    const [newLogin, setNewLogin] = useState({
         correo: '',
-        celular: '',
+        contraseña: ''
     });
 
     const [data, setData] = useState([]);
 
-    const handleNewSuscriptionChange = (field,value) => {
-        setNewSuscription({
-            ...newSuscription,
+    const handleNewLoginChange = (field,value) => {
+        setNewLogin({
+            ...newLogin,
             [field]: value,
         });
         console.log(field,value);
     }
 
-    const handleNewSuscription = () => {
+    const handleNewLogin = () => {
         fetch(url, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(newSuscription),
+            body: JSON.stringify(newLogin),
         }).then((response) => response.json())
-        .then((newSuscription) => {
-                setData([...data, newSuscription]);
+        .then((newLogin) => {
+                setData([...data, newLogin]);
                 console.log(setData);
-                setNewSuscription({
-                    nombre: '',
+                setNewLogin({
                     correo: '',
-                    celular: ''
+                    contraseña: ''
                 });
                 setOpen(true);
-                console.log(newSuscription);
+                console.log(newLogin);
         })
         .catch((error) => console.log(error));
     }
@@ -80,33 +76,27 @@ export const Login = () => {
             <div style={{display: "flex", flexWrap: "wrap", marginBottom: "10px"}}>
                 <h1>Iniciar sesión</h1>
                 <TextField
-                    label="Nombre"
+                    label="Correo Électronico"
                     fullWidth
                     sx={{ margin: '8px 0' }}
-                    value={newSuscription.nombre}
-                    onChange={(e) => handleNewSuscriptionChange( 'nombre', e.target.value)}
+                    value={newLogin.email}
+                    onChange={(e) => handleNewLoginChange( 'email', e.target.value)}
                 />
                 <TextField
-                    label="Correo"
+                    label="Contraseña"
                     fullWidth
                     sx={{ margin: '8px 0' }}
-                    value={newSuscription.correo}
-                    onChange={(e) => handleNewSuscriptionChange( 'correo', e.target.value)}
-                />
-                <TextField
-                    label="Celular (Con indicador y sin espacios)"
-                    fullWidth
-                    sx={{ margin: '8px 0' }}
-                    value={newSuscription.celular}
-                    onChange={(e) => handleNewSuscriptionChange( 'celular', e.target.value)}
+                    value={newLogin.contraseña}
+                    type='password'
+                    onChange={(e) => handleNewLoginChange( 'contraseña', e.target.value)}
                 />
             </div>
             <div sx={{display:"flex", mt:"10px"}}>
-                <Button sx={{backgroundColor:"black", color:"white"}} onClick={handleNewSuscription}>
-                    SUSCRIBIRSE
+                <Button sx={{backgroundColor:"black", color:"white"}} onClick={handleNewLogin}>
+                    INICIAR SESIÓN
                 </Button>
                 <Button sx={{backgroundColor:"black", color:"white", ml:"5px"}} onClick={()=>setOpen(true)}>
-                    CANCELAR SUSCRIPCIÓN
+                    CANCELAR 
                 </Button>
             </div>
         </div>
