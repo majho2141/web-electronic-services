@@ -206,6 +206,7 @@ export const Productos = () => {
                         .catch((error) => {
                             console.error({mesagge:error.mesagge});
                         });
+                        console.log(formData.image);
                 } else {
                     console.error('Error al crear el producto');
                 }
@@ -347,7 +348,6 @@ export const Productos = () => {
                                     <Link to="/" style={{textDecoration:"none", color:"black"}}>
                                         <Typography textAlign="center">{settings}</Typography>
                                     </Link>
-                                
                                 </MenuItem>
                         </Menu>
                     </Box>
@@ -457,7 +457,7 @@ export const Productos = () => {
                                         setSelectedImage(file);
                                         setFormData({
                                             ...formData,
-                                            image: file.name, 
+                                            image: file, 
                                         });
                                     }}
                                     style={{ display: 'none' }}
@@ -514,7 +514,7 @@ export const Productos = () => {
                                     id="outlined-multiline-static"
                                     multiline
                                     rows={4}
-                                    defaultValue="Default Value"
+                                    defaultValue=""
                                     fullWidth
                                     style={{ marginBottom: '20px' }}
                                 />

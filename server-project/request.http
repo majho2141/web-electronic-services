@@ -14,7 +14,7 @@ GET http://localhost:3100/api/v1/categorias HTTP/1.1
 GET http://localhost:3100/api/v1/categorias/6549c0d4a66ed10d09d92cdd HTTP/1.1
 
 ###
-DELETE  http://localhost:3100/api/v1/categorias/6549c0d4a66ed10d09d92cdd HTTP/1.1
+DELETE  http://localhost:3100/api/v1/categorias/654ab8b14dbcad779c033327 HTTP/1.1
 
 ///////////////////////////////////////////////////////////////////////////////////
 ###

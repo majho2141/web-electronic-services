@@ -50,6 +50,8 @@ export const Usuarios = () => {
                 console.error({message:error.message})
             })
     }, []);
+
+    const users=  usuarios.filter(usuario => usuario.rol[0] !== 'administrador');
     
     const[openModalEditar,setOpenModalEditar]=useState(false);
     const handleOpenModalEditar = () => {
@@ -157,7 +159,7 @@ export const Usuarios = () => {
             <h1>Usuarios</h1>
             <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
-                    rows={usuarios}
+                    rows={users}
                     columns={columns}
                     pageSize={5}
                     getRowId={(row) => row._id}

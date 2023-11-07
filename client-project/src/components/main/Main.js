@@ -187,13 +187,13 @@ export const Main = () => {
                 <div id="categories-list" style={{ display: "flex", gap: "15px", justifyContent: "center" }}>
                     {data.map((categoria, index) => (
                         <Button key={index} onClick={() => setSelectedCategoria(categoria)}>
-                            <Avatar sx={{ width: 200, height: 200 }} style={{ backgroundColor: "#000", color: '#fff' }}>
+                            <Avatar sx={{ width: 140, height: 140 }} style={{ backgroundColor: "#000", color: '#fff', fontSize:'0.9rem' }}>
                                 {categoria.nombre}
                             </Avatar>
                         </Button>
                     ))}
                     <Button key="todos" onClick={() => setSelectedCategoria(null)}>
-                        <Avatar sx={{ width: 200, height: 200 }} style={{ backgroundColor: "#000", color: '#fff' }}>
+                        <Avatar sx={{ width: 140, height: 140 }} style={{ backgroundColor: "#000", color: '#fff' }}>
                                 Mostrar todos
                         </Avatar>
                     </Button>
