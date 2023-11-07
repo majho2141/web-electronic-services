@@ -16,6 +16,7 @@ router.patch('/:id', userController.updateUserById);
 router.put('/:id', userController.updateUserById);
 // http://localhost:3000/api/v1/users?id=****
 router.delete('/:id', userController.deleteUserById);
-
+// http://localhost:3000/api/v1/users/email?email=****
+router.get('/email/:email', userController.getUserByEmail);
 
 module.exports= router;

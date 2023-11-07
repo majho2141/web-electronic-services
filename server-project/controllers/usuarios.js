@@ -36,6 +36,19 @@ const getUserById = async (req,res) => {
     }
 }
 
+const getUserByEmail = async (req,res) => {
+    try {
+        const {email} = req.params;   
+        const userFind = await userModel.findOne({email});
+        res.status(200).json(userFind);
+    } catch (error) {
+        res.status(404).json({message: error.message});
+    }
+}
+
+
+
+
 const updateUserById = async(req,res) => {
     try {
         const {id} = req.params;
@@ -65,5 +78,6 @@ module.exports = {
     getAllUsers,
     getUserById,
     updateUserById,
-    deleteUserById
+    deleteUserById,
+    getUserByEmail
 };

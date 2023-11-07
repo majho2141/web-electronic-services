@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Modal, Backdrop, Fade, TextField, Checkbox, InputLabel, Select, MenuItem, FormControlLabel } from '@mui/material';
+import { Button, Modal, Backdrop, Fade, TextField, Checkbox, InputLabel, Select, MenuItem, FormControlLabel, AppBar, Toolbar } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { image } from '../../assets';
 
 
 
@@ -31,13 +33,13 @@ export const Productos = () => {
     
     const handleDeleteClick = (id) => {
         if (window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
-            fetch(`http://localhost:3100/api/v1/productos/${id}`, {
+            fetch(`http://localhost:3000/api/v1/productos/${id}`, {
                 method: 'DELETE',
             })
                 .then((response) => {
                     if (response.ok) {
                         console.log(`Producto ${id} eliminado con éxito`);
-                        fetch('http://localhost:3100/api/v1/productos')
+                        fetch('http://localhost:3000/api/v1/productos')
                             .then((response) => response.json())
                             .then((data) => {
                                 setProductos(data);
@@ -71,7 +73,7 @@ export const Productos = () => {
     });
 
     useEffect(() => {
-        fetch('http://localhost:3100/api/v1/categorias')
+        fetch('http://localhost:3000/api/v1/categorias')
 
             .then((response) => response.json())
             .then((data) => {
@@ -83,7 +85,7 @@ export const Productos = () => {
     }, []);
 
     useEffect(() => {
-        fetch('http://localhost:3100/api/v1/productos')
+        fetch('http://localhost:3000/api/v1/productos')
 
             .then((response) => response.json())
             .then((data) => {
@@ -121,7 +123,7 @@ export const Productos = () => {
     const handleAccept = async () => {
         if (editMode) {
             try {
-                const response = await fetch(`http://localhost:3100/api/v1/productos/${selectedProductId}`, {
+                const response = await fetch(`http://localhost:3000/api/v1/productos/${selectedProductId}`, {
                     method: 'PATCH', 
                     headers: {
                         'Content-Type': 'application/json',
@@ -130,7 +132,7 @@ export const Productos = () => {
                     
                 });
                 if (response.ok) {
-                    fetch('http://localhost:3100/api/v1/productos')
+                    fetch('http://localhost:3000/api/v1/productos')
                     .then((response) => response.json())
                     .then((data) => {
                         setProductos(data);
@@ -147,7 +149,7 @@ export const Productos = () => {
             }
         } else {
             try {
-                const response = await fetch('http://localhost:3100/api/v1/productos/new-pro', {
+                const response = await fetch('http://localhost:3000/api/v1/productos/new-pro', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -158,7 +160,7 @@ export const Productos = () => {
                 if (response.ok) {
                     console.log('Producto creado con éxito');
                     handleCloseModal();
-                    fetch('http://localhost:3100/api/v1/productos')
+                    fetch('http://localhost:3000/api/v1/productos')
                         .then((response) => response.json())
                         .then((data) => {
                             setProductos(data);
@@ -203,7 +205,7 @@ export const Productos = () => {
 
     const handleAcceptCategoria = async () => {
         try {
-            const response = await fetch('http://localhost:3100/api/v1/categorias/new-ctg', {
+            const response = await fetch('http://localhost:3000/api/v1/categorias/new-ctg', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -215,7 +217,7 @@ export const Productos = () => {
                 console.log('Categoría creada con éxito');
                 handleCloseModalCategoria();
                 
-                fetch('http://localhost:3100/api/v1/categorias')
+                fetch('http://localhost:3000/api/v1/categorias')
                     .then((response) => response.json())
                     .then((data) => {
                         setCategorias(data);
@@ -268,14 +270,27 @@ export const Productos = () => {
     
 
     return (
+        
         <div>
-            <Button variant="outlined" onClick={handleOpenModalCategoria} style={{ marginBottom: '10px' }}>
-                Crear nueva categoria
-            </Button>
-            <Button variant="outlined" onClick={handleOpenModal} style={{ marginBottom: '10px' }}>
-                Crear nuevo producto
-            </Button>
-            <div style={{ height: 400, width: '100%' }}>
+            <div>
+                <AppBar position="fixed"  style={{ backgroundColor: "#000", color: '#fff'}}>
+                    <Toolbar>
+                        <div style={{ display: 'flex', flexGrow: 1}}>
+                            <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
+                                <img src={image.logo2} alt="logo" style={{ width: "70px", height: "60px"}} />
+                            </Link>
+                        </div>
+                    </Toolbar>
+                </AppBar>
+            </div>
+            <div style={{marginTop:"100px"}}>
+                <Button variant="outlined" onClick={handleOpenModalCategoria} style={{ marginBottom: '10px' }}>
+                    Crear nueva categoria
+                </Button>
+                <Button variant="outlined" onClick={handleOpenModal} style={{ marginBottom: '10px' }}>
+                    Crear nuevo producto
+                </Button>
+                <div style={{ height: 400, width: '100%' }}>
                 <DataGrid
                     rows={productos}
                     columns={columns}
@@ -421,6 +436,9 @@ export const Productos = () => {
                     </div>
                 </Fade>
             </Modal>
+            </div>
+            
+            
 
         </div>
     );

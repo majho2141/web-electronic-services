@@ -4,7 +4,10 @@ import { TextField } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+import { Link, Routes } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
+
+
 
 const style = {
     position: 'absolute',
@@ -21,13 +24,45 @@ const style = {
 };
 
 export const Login = () => {
+    
+    const navigate = useNavigate();
 
     const [open, setOpen] = useState(false);
+
+    const urlGetUser = "http://localhost:3000/api/v1/usuarios/email/";
+
+    const [email, setEmail] = useState('');
+
+    const handleRoutes = async (email) => {
+        let user;
+        console.log(email);
+        await fetch(`http://localhost:3000/api/v1/usuarios/email/${email}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        }).then((response) => response.json())
+        .then((userData) => {
+            user = userData;
+            console.log(user.rol);
+        })
+        if (user.rol[0] === 'administrador') {
+            navigate("/Admin");
+        }else if (user.rol[0] === 'secretario') {
+            if (user.permisos === false){
+                navigate("/");
+            }else{
+                navigate("/Productos");
+            }
+        }else if (user.rol[0] === 'usuario') {
+            navigate("/");
+        }
+    }
 
     const url = "http://localhost:3000/api/v1/auth/login";
 
     const [newLogin, setNewLogin] = useState({
-        correo: '',
+        email: '',
         contraseña: ''
     });
 
@@ -53,13 +88,14 @@ export const Login = () => {
                 setData([...data, newLogin]);
                 console.log(setData);
                 setNewLogin({
-                    correo: '',
+                    email: '',
                     contraseña: ''
                 });
                 setOpen(true);
                 console.log(newLogin);
         })
         .catch((error) => console.log(error));
+        handleRoutes(newLogin.email);
     }
 
     return (

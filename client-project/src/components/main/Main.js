@@ -177,9 +177,6 @@ export const Main = () => {
                         <div className="card-product">
                             <h3 className='card-title-product'>{producto.nombre}</h3>
                             <img src={producto.logo} alt={producto.nombre} onClick={() => handleOpen(producto._id)} className='card-image-product'/>
-                            <IconButton arial-label="delete">
-                                <DeleteIcon/>
-                            </IconButton>
                         </div>
                     ))}
                 </div>

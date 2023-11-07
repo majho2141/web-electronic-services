@@ -6,6 +6,8 @@ import { Main } from './components/main/Main';
 import { Login } from './components/login/Login';
 import { Signin } from './components/signin/Signin';
 import { Status } from './components/status/Status';
+import { Admin } from './components/admin/Admin';
+import { Productos } from './components/productos/Productos';
 
 
 
@@ -18,6 +20,8 @@ const App = () => {
         <Route path="/Iniciar sesión" element={<Login/>}/>
         <Route path="/Registrarse" element={<Signin/>}/>
         <Route path="/Activación exitosa" element={<Status/>}/>
+        <Route path="/Admin" element={<Admin/>}/>
+        <Route path="/Productos" element={<Productos/>}/>
       </Routes>
     </div>
   )
