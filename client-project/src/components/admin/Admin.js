@@ -29,7 +29,7 @@ import { image } from "../../assets";
 
 const drawerWidth = 240;
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const settings = 'cerrar sesion';
 
 export const Admin = () => {
     const [openMenu, setOpenMenu] = useState(null);
@@ -146,31 +146,16 @@ export const Admin = () => {
                         <MenuIcon />
                     </IconButton>
                     <div style={{ display: 'flex', alignItems: 'center', flexGrow: 1, justifyContent: 'center' }}>
-                        <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
-                        <Typography
-                            variant="h6"
-                            noWrap
-                            component="a"
-                            href="#app-bar-with-responsive-menu"
-                            sx={{
-                                mr: 2,
-                                fontFamily: 'monospace',
-                                fontWeight: 700,
-                                letterSpacing: '.3rem',
-                                color: 'inherit',
-                                textDecoration: 'none',
-                            }}
-                        >
-                            LOGO
-                        </Typography>
+                        <Link to="/Admin" style={{ textDecoration: 'none', color: 'white' }}>
+                            <img src={image.logo2} alt="logo" style={{ width: "70px", height: "60px"}} />
+                        </Link>
                     </div>
 
                     <Box sx={{ flexGrow: 0}}>
                         <Tooltip title="Open settings" >
-                        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                            <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                        </IconButton>
-
+                                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                    <AccountCircle sx={{ width: 32, height: 32, color: "white" }}/>
+                                </IconButton>
                         </Tooltip>
                         <Menu
                             sx={{ left:"1345px", marginTop:"40px"}}
@@ -188,11 +173,12 @@ export const Admin = () => {
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                             >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                <Typography textAlign="center">{setting}</Typography>
+                                <MenuItem key={settings} onClick={handleCloseUserMenu}>
+                                    <Link to="/" style={{textDecoration:"none", color:"black"}}>
+                                        <Typography textAlign="center">{settings}</Typography>
+                                    </Link>
+                                
                                 </MenuItem>
-                            ))}
                         </Menu>
                     </Box>
                     </Toolbar>

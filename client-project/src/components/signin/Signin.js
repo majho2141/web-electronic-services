@@ -4,7 +4,7 @@ import { TextField } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const style = {
     position: 'absolute',
@@ -23,6 +23,7 @@ const style = {
 export const Signin = () => {
 
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
 
     const url = "http://localhost:3100/api/v1/auth/signin"
 
@@ -63,6 +64,7 @@ export const Signin = () => {
                     contraseña: '',
                 });
                 console.log(newUser);
+                
         })
         .catch((error) => console.log(error));
     };
@@ -121,9 +123,11 @@ export const Signin = () => {
                 <Button sx={{backgroundColor:"black", color:"white"}} onClick={handleNewUser}>
                     Registrarse
                 </Button>
-                <Button sx={{backgroundColor:"black", color:"white", ml:"5px"}} onClick={()=>setOpen(true)}>
-                    Cancelar
-                </Button>
+                <Link to="/" >
+                    <Button sx={{backgroundColor:"black", color:"white", ml:"5px"}} onClick={()=>setOpen(true)}>
+                        Cancelar
+                    </Button>
+                </Link>
             </div>
         </div>
     )

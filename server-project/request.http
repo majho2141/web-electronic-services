@@ -11,10 +11,10 @@ Content-Type: application/json
 GET http://localhost:3100/api/v1/categorias HTTP/1.1
 
 ###
-GET http://localhost:3100/api/v1/categorias/6547071a300f94f7e0ddc86a HTTP/1.1
+GET http://localhost:3100/api/v1/categorias/6549c0d4a66ed10d09d92cdd HTTP/1.1
 
 ###
-DELETE  http://localhost:3100/api/v1/categorias/654708493136c6132ac65866 HTTP/1.1
+DELETE  http://localhost:3100/api/v1/categorias/6549c0d4a66ed10d09d92cdd HTTP/1.1
 
 ///////////////////////////////////////////////////////////////////////////////////
 ###
@@ -54,7 +54,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:3100/api/v1/productos/6546d42ca4261fded22159e0 HTTP/1.1
+DELETE http://localhost:3100/api/v1/productos/6549c0e4a66ed10d09d92ce0 HTTP/1.1
 
 ###
 POST http://localhost:3100/api/v1/auth/signin HTTP/1.1

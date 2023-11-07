@@ -8,6 +8,7 @@ import { Signin } from './components/signin/Signin';
 import { Status } from './components/status/Status';
 import { Admin } from './components/admin/Admin';
 import { Productos } from './components/productos/Productos';
+import {StatusUsers } from './components/status/StatusUsers';
 
 
 
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/Activación exitosa" element={<Status/>}/>
         <Route path="/Admin" element={<Admin/>}/>
         <Route path="/Productos" element={<Productos/>}/>
+        <Route path="/StatusUsers" element={<StatusUsers/>}/>
       </Routes>
     </div>
   )

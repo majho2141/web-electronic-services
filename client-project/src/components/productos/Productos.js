@@ -1,13 +1,48 @@
 import React, { useEffect, useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
-import { Button, Modal, Backdrop, Fade, TextField, Checkbox, InputLabel, Select, MenuItem, FormControlLabel, AppBar, Toolbar } from '@mui/material';
+import { Button, Modal, Backdrop, Fade, TextField, Checkbox, InputLabel, Select, MenuItem, FormControlLabel, AppBar, Toolbar,Box,Typography, IconButton,Menu } from '@mui/material';
 import { Link } from 'react-router-dom';
+import Tooltip from '@mui/material/Tooltip';
 import { image } from '../../assets';
+import { styled } from '@mui/material/styles';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import AccountCircle from '@mui/icons-material/AccountCircle';
 
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
 
+const settings = 'cerrar sesion';
 
 export const Productos = () => {
     const [open, setOpen] = useState(false);
+    const [selectedImage, setSelectedImage] = useState(null);
+
+    const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+    const handleOpenNavMenu = (event) => {
+        setAnchorElNav(event.currentTarget);
+    };
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
 
     const [editMode, setEditMode] = useState(false);
     const [selectedProductId, setSelectedProductId] = useState(null);
@@ -70,6 +105,7 @@ export const Productos = () => {
         cantidad: '',
         disponibilidad: true,
         categoriaId: '',
+        image:'',
     });
 
     useEffect(() => {
@@ -121,6 +157,7 @@ export const Productos = () => {
     };
     
     const handleAccept = async () => {
+        
         if (editMode) {
             try {
                 const response = await fetch(`http://localhost:3100/api/v1/productos/${selectedProductId}`, {
@@ -136,6 +173,7 @@ export const Productos = () => {
                     .then((response) => response.json())
                     .then((data) => {
                         setProductos(data);
+                        console.log(formData.image);
                     })
                     .catch((error) => {
                         console.error({mesagge:error.mesagge});
@@ -239,7 +277,7 @@ export const Productos = () => {
     };
 
     const columns = [
-        { field: 'logo', headerName: 'Imagen', width: 250 },
+        { field: 'image', headerName: 'Image', width: 250 },
         { field: 'nombre', headerName: 'Nombre', width: 160 },
         { field: 'precio', headerName: 'Precio',valueGetter: (params) => params.row.precio.$numberDecimal, width: 160 },
         { field: 'descuento', headerName: 'Descuento', width: 160,valueGetter: (params) => params.row.descuento*100+'%'},
@@ -273,15 +311,48 @@ export const Productos = () => {
         
         <div>
             <div>
-                <AppBar position="fixed"  style={{ backgroundColor: "#000", color: '#fff'}}>
-                    <Toolbar>
-                        <div style={{ display: 'flex', flexGrow: 1}}>
-                            <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
-                                <img src={image.logo2} alt="logo" style={{ width: "70px", height: "60px"}} />
-                            </Link>
-                        </div>
-                    </Toolbar>
-                </AppBar>
+            <AppBar position="fixed"  style={{ backgroundColor: "#000", color: '#fff' }}>
+                <Toolbar>
+                    <div style={{ display: 'flex', flexGrow: 1}}>
+                        <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
+                            <img src={image.logo2} alt="logo" style={{ width: "70px", height: "60px"}} />
+                        </Link>
+                    </div>
+                    <Box sx={{ display: "flex", gap:"20px", flexGrow: 0}}>
+                        <Button sx={{backgroundColor:"black" , color:"white"}}>
+                            <Link to="/Suscribirse" style={{textDecoration:"none", color:"white"}}>Suscribirse</Link>
+                        </Button>
+                        <Tooltip title="Open settings" >
+                            <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                                <AccountCircle sx={{ width: 32, height: 32, color: "white" }}/>
+                            </IconButton>
+                        </Tooltip>
+                        <Menu
+                            sx={{ marginTop: "40px"}}
+                            id="menu-appbar"
+                            anchorEl={anchorElUser}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={Boolean(anchorElUser)}
+                            onClose={handleCloseUserMenu}
+                            >
+                            <MenuItem key={settings} onClick={handleCloseUserMenu}>
+                                    <Link to="/" style={{textDecoration:"none", color:"black"}}>
+                                        <Typography textAlign="center">{settings}</Typography>
+                                    </Link>
+                                
+                                </MenuItem>
+                        </Menu>
+                    </Box>
+                </Toolbar>
+            </AppBar>
             </div>
             <div style={{marginTop:"100px"}}>
                 <Button variant="outlined" onClick={handleOpenModalCategoria} style={{ marginBottom: '10px' }}>
@@ -306,7 +377,7 @@ export const Productos = () => {
                 <Fade in={openModal}>
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
                         <div style={{ backgroundColor: '#fff', padding: '20px', width: '400px', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
-                            <h2>Crear Nuevo Producto</h2>
+                            <h2>Producto</h2>
                             <form>
                                 <TextField
                                     label="Nombre"
@@ -333,7 +404,7 @@ export const Productos = () => {
                                     fullWidth
                                     style={{ marginBottom: '20px' }}
                                 >
-                                    {[...Array(21).keys()].map((i) => (
+                                    {[...Array(7).keys()].map((i) => (
                                         <MenuItem key={i * 5} value={i * 5}>
                                             {i * 5}
                                         </MenuItem>
@@ -378,8 +449,32 @@ export const Productos = () => {
                                         </option>
                                     ))}
                                 </Select>
-
-
+                                <InputLabel>Subir Imagen</InputLabel>
+                                <input
+                                    type="file"
+                                    onChange={(e) => {
+                                        const file = e.target.files[0];
+                                        setSelectedImage(file);
+                                        setFormData({
+                                            ...formData,
+                                            image: file.name, 
+                                        });
+                                    }}
+                                    style={{ display: 'none' }}
+                                    accept="image/*"
+                                />
+                                <Button
+                                    component="label"
+                                    variant="contained"
+                                    onClick={() => {
+                                        const fileInput = document.querySelector('[type="file"]');
+                                        fileInput.click();
+                                    }}
+                                    startIcon={<CloudUploadIcon />}
+                                    style={{ marginBottom: '20px' }}
+                                >
+                                    Subir Img
+                                </Button>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Button variant="outlined" color="primary" onClick={handleAccept}>
                                         Aceptar

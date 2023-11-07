@@ -100,12 +100,16 @@ export const Suscription = () => {
                 />
             </div>
             <div sx={{display:"flex", mt:"10px"}}>
-                <Button sx={{backgroundColor:"black", color:"white"}} onClick={handleNewSuscription}>
-                    SUSCRIBIRSE
-                </Button>
-                <Button sx={{backgroundColor:"black", color:"white", ml:"5px"}} onClick={()=>setOpen(true)}>
-                    CANCELAR SUSCRIPCIÓN
-                </Button>
+                <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
+                    <Button sx={{backgroundColor:"black", color:"white"}} onClick={handleNewSuscription}>
+                        SUSCRIBIRSE
+                    </Button>
+                </Link>
+                <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
+                    <Button sx={{backgroundColor:"black", color:"white", ml:"5px"}} onClick={()=>setOpen(true)}>
+                        CANCELAR SUSCRIPCIÓN
+                    </Button>
+                </Link>
             </div>
         </div>
     )

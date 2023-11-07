@@ -31,7 +31,7 @@ const ProductoSchema = moongose.Schema({
         type: Boolean,
         require: true,
     },
-    logo:{
+    image:{
         type: String,
     },
     categoriaId:

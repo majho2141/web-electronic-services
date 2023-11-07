@@ -43,6 +43,7 @@ export const Main = () => {
     const [data, setData] = useState([]);
     const [productos, setProductos] = useState(null);
     const [dataProductos, setDataProductos] = useState([]);
+    const [selectedCategoria, setSelectedCategoria] = useState(null);
 
     const urlCategorias = "http://localhost:3100/api/v1/categorias";
     const urlProductos = "http://localhost:3100/api/v1/productos";
@@ -112,6 +113,30 @@ export const Main = () => {
         console.log(producto);
         setselectedProducto(producto);
     }
+
+    const getFilteredProductos = () => {
+        if (selectedCategoria) {
+            return dataProductos.filter(producto => producto.categoriaId === selectedCategoria._id);
+        } else {
+            return dataProductos; 
+        }
+    }
+
+    const ProductosList = () => {
+        const filteredProductos = getFilteredProductos();
+
+        return (
+            <div className="products-list">
+                {filteredProductos.map((producto) => (
+                    <div className="card-product">
+                        <h3 className='card-title-product'>{producto.nombre}</h3>
+                        <img src={producto.logo} alt={producto.nombre} onClick={() => handleOpen(producto._id)} className='card-image-product' />
+                    </div>
+                ))}
+            </div>
+        );
+    }
+
     return (
         <div id="container" style={{padding:"100px"}}>
             <AppBar position="fixed"  style={{ backgroundColor: "#000", color: '#fff' }}>
@@ -151,35 +176,31 @@ export const Main = () => {
                                     <Link to={`/${setting}`} style={{textDecoration:"none", color:"black"}}>
                                         <Typography textAlign="center">{setting}</Typography>
                                     </Link>
-                                
                                 </MenuItem>
                             ))}
                         </Menu>
                     </Box>
                 </Toolbar>
             </AppBar>
-            <div id="categories" style={{marginTop: "50px"}}>
-                <h1 style={{display:"flex", justifyContent: "center"}}>Categorias</h1>
-                <div id="categories-list" style={{display: "flex" , gap: "15px" , justifyContent: "center"}}>
-                    {data.map((categoria, index)=> (
-                        <Button key={index}>
-                            <Avatar sx={{ width:200, height:200}} style={{ backgroundColor: "#000", color: '#fff' }}>
+            <div id="categories" style={{ marginTop: "50px" }}>
+                <h1 style={{ display: "flex", justifyContent: "center" }}>Categorias</h1>
+                <div id="categories-list" style={{ display: "flex", gap: "15px", justifyContent: "center" }}>
+                    {data.map((categoria, index) => (
+                        <Button key={index} onClick={() => setSelectedCategoria(categoria)}>
+                            <Avatar sx={{ width: 200, height: 200 }} style={{ backgroundColor: "#000", color: '#fff' }}>
                                 {categoria.nombre}
                             </Avatar>
                         </Button>
                     ))}
+                    <Button key="todos" onClick={() => setSelectedCategoria(null)}>
+                        <Avatar sx={{ width: 200, height: 200 }} style={{ backgroundColor: "#000", color: '#fff' }}>
+                                Mostrar todos
+                        </Avatar>
+                    </Button>
                 </div>
             </div>
             <div id="products" style={{marginTop: "50px"}}>
-                <h1 style={{display:"flex", justifyContent: "center"}}>Productos</h1>
-                <div className="products-list">
-                    {dataProductos.map((producto) => (
-                        <div className="card-product">
-                            <h3 className='card-title-product'>{producto.nombre}</h3>
-                            <img src={producto.logo} alt={producto.nombre} onClick={() => handleOpen(producto._id)} className='card-image-product'/>
-                        </div>
-                    ))}
-                </div>
+                <ProductosList />
                 <div className="product-select">
                     <Modal
                         open={open}
