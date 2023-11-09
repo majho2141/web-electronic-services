@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef} from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button, Modal, Backdrop, Fade, TextField, Checkbox, InputLabel, Select, MenuItem, FormControlLabel, AppBar, Toolbar,Box,Typography, IconButton,Menu } from '@mui/material';
 import { Link } from 'react-router-dom';
@@ -20,9 +20,13 @@ const VisuallyHiddenInput = styled('input')({
     width: 1,
 });
 
-const settings = 'cerrar sesion';
+const settings = 'Cerrar Sesión';
 
 export const Productos = () => {
+    const fileInputRef = useRef();
+
+    let [oldDiscount, setOldDiscount] = useState(0);
+
     const [open, setOpen] = useState(false);
     const [selectedImage, setSelectedImage] = useState(null);
 
@@ -47,12 +51,17 @@ export const Productos = () => {
     const [editMode, setEditMode] = useState(false);
     const [selectedProductId, setSelectedProductId] = useState(null);
 
+
     const handleEditClick = (id) => {
         setEditMode(true);
         setSelectedProductId(id);
+        console.log(selectedProductId);
 
         const selectedProduct = productos.find((product) => product._id === id);
         if (selectedProduct) {
+            console.log(selectedProduct);
+            console.log(selectedProduct.descuento.toFixed(0));
+            console.log(oldDiscount);
             setFormData({
                 nombre: selectedProduct.nombre,
                 precio: selectedProduct.precio.$numberDecimal,
@@ -61,10 +70,26 @@ export const Productos = () => {
                 disponibilidad: selectedProduct.disponibilidad,
                 categoriaId: selectedProduct.categoriaId,
             });
+            setOldDiscount(selectedProduct.descuento);
+            console.log(oldDiscount);
         }
         
         handleOpenModal();
     }
+
+    const sendMessage = (product) => {
+        const response = fetch (`http://localhost:3100/api/v1/productos/send-message/${product}`,
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(product),
+        }
+        );
+
+    }
+            
     
     const handleDeleteClick = (id) => {
         if (window.confirm('¿Estás seguro de que deseas eliminar este producto?')) {
@@ -157,9 +182,15 @@ export const Productos = () => {
     };
     
     const handleAccept = async () => {
-        
+            // const formData = new FormData();
+            // formData.append('nombre', formData.nombre);
+            // formData.append('precio', formData.precio);
+            // formData.append('descuento', formData.descuento);
+            // formData.append('cantidad', formData.cantidad);
+            // formData.append('disponibilidad', formData.disponibilidad);
+            // formData.append('categoriaId', formData.categoriaId);
         if (editMode) {
-            try {
+            try {                
                 const response = await fetch(`http://localhost:3100/api/v1/productos/${selectedProductId}`, {
                     method: 'PATCH', 
                     headers: {
@@ -173,11 +204,16 @@ export const Productos = () => {
                     .then((response) => response.json())
                     .then((data) => {
                         setProductos(data);
-                        console.log(formData.image);
                     })
                     .catch((error) => {
                         console.error({mesagge:error.mesagge});
                     });
+                    console.log(formData);
+                    if (oldDiscount < formData.descuento / 100) {
+                        console.log('Se ha enviado el mensaje');
+                        console.log(formData);
+                        sendMessage(formData);
+                    }
                     handleCloseModal();
                 } else {
                     console.error('Error al actualizar el producto');
@@ -216,6 +252,10 @@ export const Productos = () => {
         }
     };
     
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setSelectedImage(file);
+    };
 
     const handleCancel = () => {
         setEditMode(false);
@@ -449,32 +489,6 @@ export const Productos = () => {
                                         </option>
                                     ))}
                                 </Select>
-                                <InputLabel>Subir Imagen</InputLabel>
-                                <input
-                                    type="file"
-                                    onChange={(e) => {
-                                        const file = e.target.files[0];
-                                        setSelectedImage(file);
-                                        setFormData({
-                                            ...formData,
-                                            image: file, 
-                                        });
-                                    }}
-                                    style={{ display: 'none' }}
-                                    accept="image/*"
-                                />
-                                <Button
-                                    component="label"
-                                    variant="contained"
-                                    onClick={() => {
-                                        const fileInput = document.querySelector('[type="file"]');
-                                        fileInput.click();
-                                    }}
-                                    startIcon={<CloudUploadIcon />}
-                                    style={{ marginBottom: '20px' }}
-                                >
-                                    Subir Img
-                                </Button>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Button variant="outlined" color="primary" onClick={handleAccept}>
                                         Aceptar

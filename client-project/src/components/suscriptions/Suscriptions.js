@@ -92,7 +92,7 @@ export const Suscription = () => {
                     onChange={(e) => handleNewSuscriptionChange( 'correo', e.target.value)}
                 />
                 <TextField
-                    label="Celular (Con indicador y sin espacios)"
+                    label="Celular"
                     fullWidth
                     sx={{ margin: '8px 0' }}
                     value={newSuscription.celular}

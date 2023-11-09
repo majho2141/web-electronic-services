@@ -1,8 +1,6 @@
 const { response } = require('express');
 const suscripcionModel = require('../models/suscripciones');
-const accountSid = 'AC439532fa38d91d713ec7e0008e9a63b2';
-const authToken = '2865590e5267426c31239084746aa9ea';
-const client = require('twilio')(accountSid, authToken);
+const request = require('request');
 
 // Asincronía
 // async await
@@ -19,14 +17,21 @@ const createSuscripcion = async (req, res) => {
         await newSuscripcion.save();
         console.log(newSuscripcion);
 
-        // Enviar mensaje de WhatsApp
-        const sendMail = await client.messages.create({
-            body: `¡Muchas gracias por suscribirte, ${nombre}!`,
-            from: 'whatsapp:+14155238886',
-            to: `whatsapp:${celular}`
+        var options = {
+            method: 'POST',
+            url: 'https://api.ultramsg.com/instance67706/messages/chat',
+            headers: { 'content-type': ' application/x-www-form-urlencoded' },
+            form: {
+                "token": process.env.WHATSAPP_TOKEN,
+                "to": `+57${celular}`,
+                "body": `Electronics X\nMuchas gracias por suscribirte ${nombre}!\nTe mantendremos informado de nuestras novedades.`,
+            }
+        };
+        request(options, function (error, response, body) {
+            if (error) throw new Error(error);
+            console.log(body);
         });
-        console.log(sendMail.sid);
-
+        console.log("Mensaje enviado");
         res.status(200).json({ message: "Suscripción creada con éxito" });
     } catch (error) {
         console.error(error);

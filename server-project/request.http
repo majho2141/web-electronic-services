@@ -3,8 +3,8 @@ POST http://localhost:3100/api/v1/categorias/new-ctg HTTP/1.1
 Content-Type: application/json
 
 {
-    "nombre": "prueba2",
-    "descripcion": "prueba.0"
+    "nombre": "Televisores",
+    "descripcion": "prueba"
 }
 
 ###
@@ -22,12 +22,12 @@ POST http://localhost:3100/api/v1/productos/new-pro HTTP/1.1
 Content-Type: application/json
 
 {
-    "nombre": "Ejemplo",
-    "precio": 20300,
-    "descuento": 5,
-    "cantidad": 50,
-    "disponibilidad": true,
-    "categoriaId": "6547084a3136c6132ac65868"
+    "nombre": "Samsung 32'",
+    "precio": 1200,
+    "descuento": 0,
+    "cantidad": 0,
+    "disponibilidad": false,
+    "categoriaId": "654b123cfc3550478831f60b"
 }
 
 
@@ -96,7 +96,7 @@ GET http://localhost:3100/api/v1/suscripciones HTTP/1.1
 Content-Type: application/json
 
 ###
-DELETE http://localhost:3100/api/v1/suscripciones/6549946944fa75ead33d215d HTTP/1.1
+DELETE http://localhost:3100/api/v1/suscripciones/654ad35fa673209433866b2d HTTP/1.1
 Content-Type: application/json
 
 ###

@@ -1,26 +1,16 @@
 const { json } = require('express');
 const productoModel =require ('../models/producto')
-const multer = require('multer');
-const multerConfig = require('../utils/multerConfig')
-const upload = multer(multerConfig).single('image')
+const request = require('request');
 
-const fileUpload = (req,res,next) => {
-    upload(req,res,function(error) {
-        if(error){
-            res.json({message: error});
-        }
-        return next();
-    })
-}
+
+
 const createProducto = async (req,res) =>{
     try {
         const productoData = req.body;
         if (!productoData.categoriaId){
-            return res.status(400).json({message:'El ID de la categoria es obligatorio'})
+            return res.status(400).json({message:'El ID de la categoria es obligatorio'});
         }
-        if(req.file && req.file.filename){
-            productoData.image = req.file.filename
-        }
+        
 
         const newProducto = new productoModel({ ...productoData });
         await newProducto.save();
@@ -64,17 +54,10 @@ const getAllProductos = async (req,res) =>{
 
 const updateProductoById = async(req,res) => {
     try {
-        let newProducto = req.body
         const {id} = req.params;
-        const productoDataEdit =  req.body;
+        let productoDataEdit =  req.body;
 
-        if(req.file && req.file.filename){
-            newProducto.image = req.file.filename
-        }else{
-            const producto=await productoModel.findById(req.params.id)
-            newProducto.image = producto.image
-        }
-        const response = await productoModel.findByIdAndUpdate(id, productoDataEdit);
+        const productoUpdated = await productoModel.findByIdAndUpdate(id, productoDataEdit);     
         res.status(200).json({message: 'Actualización exitosa'});
     } catch (error) {
         res.status(400).json({message: error.message});
@@ -90,9 +73,91 @@ const deleteProductoById = async(req,res) => {
     } catch (error) {
         res.status(400).json({message: error.message});
     }
-
-
 }
+
+const sendMessageToSuscribers = async (req, res) => {
+    try {
+        const product = req.body;
+        console.log(product);
+
+        if (!product) {
+            return res.status(400).json({ message: 'Producto no encontrado' });
+        }
+        // Compara el nuevo descuento con el antiguo
+            // Realiza la solicitud para obtener los suscriptores
+            const suscribersData = await fetchSuscribers();
+            const suscribers = suscribersData || [];
+            // Envía mensajes por WhatsApp a los suscriptores
+            for (const subscriber of suscribers) {
+                // Aquí debes agregar código para enviar mensajes por WhatsApp a cada suscriptor
+                // Puedes utilizar la API de WhatsApp Business API o cualquier otro servicio que prefieras.
+                // Asegúrate de configurar la integración con WhatsApp Business API correctamente.
+                var options = {
+                    method: 'POST',
+                    url: 'https://api.ultramsg.com/instance67706/messages/chat',
+                    headers: { 'content-type': ' application/x-www-form-urlencoded' },
+                    form: {
+                        "token": process.env.WHATSAPP_TOKEN,
+                        "to": `+57${subscriber.celular}`,
+                        "body": `Electronics X\nHola ,${subscriber.nombre}!\nQueremos informarte que ${product.nombre} se encuentra con ${product.descuento}% de descuento!, aprovecha esta promoción y otras más accediendo a nuestro sitio web.`,
+                    }
+                };
+                request(options, function (error, response, body) {
+                    if (error) throw new Error(error);
+                    console.log(body);
+                });
+            }
+            res.status(200).json({ message: 'Mensaje enviado' });
+
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+}
+
+// Función para obtener los suscriptores
+const fetchSuscribers = async () => {
+    const urlSuscribers = 'http://localhost:3100/api/v1/suscripciones';
+    try {
+        const response = await fetch(urlSuscribers, {
+            method: 'GET',
+        });
+
+        if (response.ok) {
+            const suscribersData = await response.json();
+            return suscribersData;
+        } else {
+            console.error('Error al obtener suscriptores');
+            return null;
+        }
+    } catch (error) {
+        console.error('Error al obtener suscriptores:', error);
+        return null;
+    }
+}
+
+// const sendMessageToSuscribers = async(req,res) => {
+//     var suscribers;
+//     const urlSuscribers = 'http://localhost:3100/api/v1/suscripciones';
+//     fetch(urlSuscribers, {
+//         method: 'GET', 
+//     }).then((response) => response.json())
+//     .then((suscribersData) => {
+//         suscribers = suscribersData;
+//         console.log(suscribers);
+//     })
+//     .catch((error) => console.log(error));
+//     try {
+//         const { id } = req.params;
+//         const response = await productoModel.findById(id);
+//         if (!response){
+//             return res.status(400).json({message: 'Producto no encontrado'})
+//         };
+//         console.log();
+//         res.status(200).json(response);
+//     } catch (err) {
+//         res.status(400).json({message: err.message})
+//     }
+// }
 
 
 module.exports = {
@@ -101,6 +166,6 @@ module.exports = {
     getProductoById,
     getAllProductos,
     updateProductoById,
-    fileUpload,
-    deleteProductoById
+    deleteProductoById,
+    sendMessageToSuscribers,
 }

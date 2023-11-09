@@ -18,6 +18,6 @@ app.use(`/${API_VERSION}/categorias`, categoriaRoutes);
 app.use(`/${API_VERSION}/productos`, productoRoutes);
 app.use(`/${API_VERSION}/suscripciones`, suscripcionesRoutes);
 app.use(`/${API_VERSION}/auth`, authRoutes);
-app.use( express.static('uploads'));
+
 
 module.exports = app;

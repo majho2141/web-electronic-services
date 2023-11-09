@@ -130,7 +130,7 @@ export const Main = () => {
                 {filteredProductos.map((producto) => (
                     <div className="card-product">
                         <h3 className='card-title-product'>{producto.nombre}</h3>
-                        <img src={producto.logo} alt={producto.nombre} onClick={() => handleOpen(producto._id)} className='card-image-product' />
+                        <img src={producto.image} alt={producto.nombre} onClick={() => handleOpen(producto._id)} className='card-image-product' />
                     </div>
                 ))}
             </div>
@@ -143,7 +143,7 @@ export const Main = () => {
                 <Toolbar>
                     <div style={{ display: 'flex', flexGrow: 1}}>
                         <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
-                            <img src={image.logo2} alt="logo" style={{ width: "70px", height: "60px"}} />
+                            <img src={image.logo2} alt="image" style={{ width: "70px", height: "60px"}} />
                         </Link>
                     </div>
                     <Box sx={{ display: "flex", gap:"20px", flexGrow: 0}}>
@@ -211,7 +211,7 @@ export const Main = () => {
                         <Grid container spacing={2}>
                             <Box sx={style}>
                                 <Grid item xs={2} sm={4} md={6}>
-                                    <img src={selectedProducto?.logo} alt={selectedProducto?.nombre} style={{ width: "100%", margin: "0" }} />
+                                    <img src={selectedProducto?.image} alt={selectedProducto?.nombre} style={{ width: "100%", margin: "0" }} />
                                 </Grid>
                                 <Grid item xs={10} sm={8} md={6}>
                                     <div className="product-information">

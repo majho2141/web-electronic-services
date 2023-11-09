@@ -29,7 +29,7 @@ import { image } from "../../assets";
 
 const drawerWidth = 240;
 const pages = ['Products', 'Pricing', 'Blog'];
-const settings = 'cerrar sesion';
+const settings = 'Cerrar Sesión';
 
 export const Admin = () => {
     const [openMenu, setOpenMenu] = useState(null);
