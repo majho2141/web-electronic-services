@@ -28,7 +28,7 @@ const ProductoSchema = moongose.Schema({
         type: Boolean,
         require: true,
     },
-    image:{
+    photo:{
         type: String,
     },
     categoriaId:
@@ -37,5 +37,12 @@ const ProductoSchema = moongose.Schema({
         ref:'categoria'
     }
 });
+
+ProductoSchema.methods.setPhoto = function setPhoto(filename) {
+    const host = process.env.HOST;
+    const port = process.env.PORT;
+    this.photo = `${host}:${port}/public/${filename}`;
+};
+
 const Producto = moongose.model("Producto",ProductoSchema);
 module.exports = Producto;

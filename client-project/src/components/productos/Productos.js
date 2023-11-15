@@ -130,7 +130,7 @@ export const Productos = () => {
         cantidad: '',
         disponibilidad: true,
         categoriaId: '',
-        image:'',
+        photo:'',
     });
 
     useEffect(() => {
@@ -173,7 +173,15 @@ export const Productos = () => {
                 ...formData,
                 [name]: newValue,
             });
-        } else {
+        }else if (name === 'photo') {
+            const file = e.target.files ? e.target.files[0]: null;
+            setSelectedImage(file);
+            setFormData({
+                ...formData,
+                [name]: file,
+            });
+        } 
+        else {
             setFormData({
                 ...formData,
                 [name]: type === 'checkbox' ? checked : value,
@@ -182,13 +190,14 @@ export const Productos = () => {
     };
     
     const handleAccept = async () => {
-            // const formData = new FormData();
-            // formData.append('nombre', formData.nombre);
-            // formData.append('precio', formData.precio);
-            // formData.append('descuento', formData.descuento);
-            // formData.append('cantidad', formData.cantidad);
-            // formData.append('disponibilidad', formData.disponibilidad);
-            // formData.append('categoriaId', formData.categoriaId);
+        const formDataData = new FormData();
+        formDataData.append('nombre', formData.nombre);
+        formDataData.append('precio', formData.precio);
+        formDataData.append('descuento', formData.descuento);
+        formDataData.append('cantidad', formData.cantidad);
+        formDataData.append('disponibilidad', formData.disponibilidad);
+        formDataData.append('photo', formData.photo);
+        formDataData.append('categoriaId', formData.categoriaId);
         if (editMode) {
             try {                
                 const response = await fetch(`http://localhost:3100/api/v1/productos/${selectedProductId}`, {
@@ -225,10 +234,7 @@ export const Productos = () => {
             try {
                 const response = await fetch('http://localhost:3100/api/v1/productos/new-pro', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(formData), 
+                    body: formDataData, 
                 });
         
                 if (response.ok) {
@@ -489,6 +495,19 @@ export const Productos = () => {
                                         </option>
                                     ))}
                                 </Select>
+                                <Button 
+                                variant='contained'
+                                component='label'
+                                >
+                                    imagen
+                                    <input 
+                                    type='file'
+                                    hidden
+                                    name='photo'
+                                    onChange={handleFormChange}>
+                                    
+                                    </input>
+                                </Button>
                                 <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                     <Button variant="outlined" color="primary" onClick={handleAccept}>
                                         Aceptar

@@ -10,9 +10,13 @@ const createProducto = async (req,res) =>{
         if (!productoData.categoriaId){
             return res.status(400).json({message:'El ID de la categoria es obligatorio'});
         }
-        
-
         const newProducto = new productoModel({ ...productoData });
+
+        if (req.file) {
+            const { filename } = req.file;
+            newProducto.setPhoto(filename);
+        }
+
         await newProducto.save();
         res.status(201).json(newProducto);
     } catch (err) {
