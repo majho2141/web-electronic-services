@@ -60,7 +60,6 @@ export const Main = () => {
             .then((response) => response.json())
             .then((data) => {
                 setDataProductos(data)
-                console.log(data)
             })
             .catch((error) => console.log(error))
     }, []);
@@ -77,7 +76,6 @@ export const Main = () => {
             .then((response) => response.json())
             .then((data) => {
                 setData(data)
-                console.log(data)
             })
             .catch((error) => console.log(error))
     }, []);
@@ -108,9 +106,7 @@ export const Main = () => {
 
     const handleOpen = (productoId) => {
         const producto = dataProductos.find((producto) => producto._id === productoId);
-        console.log(productoId);
         setOpen(true);
-        console.log(producto);
         setselectedProducto(producto);
     }
 
@@ -210,8 +206,8 @@ export const Main = () => {
                     >
                         <Grid container spacing={2}>
                             <Box sx={style}>
-                                <Grid item xs={2} sm={4} md={6}>
-                                    <img src={selectedProducto?.image} alt={selectedProducto?.nombre} style={{ width: "100%", margin: "0" }} />
+                                <Grid item xs={2} sm={4} md={6} sx={{display: "flex"}}>
+                                    <img src={selectedProducto?.photo} alt={selectedProducto?.nombre} style={{ width: "100%" }} />
                                 </Grid>
                                 <Grid item xs={10} sm={8} md={6}>
                                     <div className="product-information">
@@ -219,11 +215,14 @@ export const Main = () => {
                                         <Typography id="modal-modal-title" variant="h6" component="h2">
                                             <p>Nombre: <strong>{selectedProducto?.nombre}</strong></p>
                                         </Typography>
-                                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                        <Typography id="modal-modal-description" >
                                             <p>Cantidad: <strong>{selectedProducto?.cantidad}</strong> </p>
                                         </Typography>
                                         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                                             <p>Precio: <strong>{selectedProducto?.precio.$numberDecimal}</strong> </p>
+                                        </Typography>
+                                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                            <p>Precio con descuento: <strong>{selectedProducto?.precio.$numberDecimal - (selectedProducto?.precio.$numberDecimal*selectedProducto?.descuento)}</strong> </p>
                                         </Typography>
                                     </div>
                                 </Grid>

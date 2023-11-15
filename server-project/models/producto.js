@@ -41,6 +41,7 @@ const ProductoSchema = moongose.Schema({
 ProductoSchema.methods.setPhoto = function setPhoto(filename) {
     const host = process.env.HOST;
     const port = process.env.PORT;
+    console.log(host,port);
     this.photo = `${host}:${port}/public/${filename}`;
 };
 
